@@ -1,0 +1,268 @@
+{
+  "urn": "urn:uuid:a4976a30-9364-11e9-9146-07d60b41c44c",
+  "version": "0.1.3",
+  "name": "Exchange moodle data with openLMIS",
+  "description": "Exchange moodle data with openLMIS",
+  "defaultChannelConfig": [
+    
+    {
+      "name": "Pull users from moodle and push them to openLMIS",
+      "urlPattern": "^/pushmoodle2lmis/$",
+      "alerts": [],
+      "txRerunAcl": [],
+      "txViewFullAcl": [],
+      "txViewAcl": [],
+      "properties": [],
+      "matchContentTypes": [],
+      "pollingSchedule": "* 3-4 * 5 *",
+      "timeout":"600000",
+      "routes": [
+        {
+          "name": "Pull users from moodle and push them to openLMIS",
+          "host": "localhost",
+          "port": "5023",
+          "primary": true,
+          "path": "/pushmoodle2lmis",
+          "type": "http"
+        }
+        
+      ],
+      "allow": ["exchange"],
+      "type": "http"
+    }
+   ],
+  "endpoints": [
+    {
+      "name": " Exchange moodle data with openLMIS",
+      "host": "localhost",
+      "path": "/launchmoodlesync",
+      "port": "5023",
+      "primary": true,
+      "type": "http"
+    }
+  ],
+  "configDefs": [
+    {
+      "param": "upstreamUrl",
+      "displayName": "Upstream URL",
+      "description": "The URL of the service upstream of the mediator",
+      "type": "string",
+      "template": []
+    },
+    {
+      "param": "clientPassword",
+      "displayName": "OpenHIM console client password",
+      "description": "Client password as configured in openHIM console",
+      "type": "string",
+      "template": []
+    },
+    {
+      "param": "coursesToProcess",
+      "displayName": "coursesToProcess",
+      "description": "List of courses to pull enrolled student, shortnames separated by ','",
+      "type": "string",
+      "template": []
+    },
+    {
+	  "param": "maxUsersToSyncPerCall",
+      "displayName": "maxUsersToSyncPerCall",
+      "description": "Max number of users to process per call",
+      "type": "string",
+      "template": []
+	},
+    {
+      "param": "moodleParams",
+      "displayName": "moodleParams",
+      "description": "Moodle params for API",
+      "type": "struct",
+      "template": [
+		{
+			"param": "url",
+			"displayName": "URL",
+			"description": "the webservice URL",
+			"type": "string"
+		},
+		{
+			"param": "apiPath",
+			"displayName": "apiPath",
+			"description": "the api Path (do not change)",
+			"type": "string"
+		},
+		{
+			"param": "token",
+			"displayName": "token",
+			"description": "The ws user associated token",
+			"type": "string"
+		}
+      ]
+    },
+    {
+      "param": "esiglServer",
+      "displayName": "eSIGL server parameters",
+      "description": "Description of the eSIGL server parameters",
+      "type": "struct",
+      "template": [
+		{
+			"param": "url",
+			"displayName": "url",
+			"description": "The base URL (e.g. http://192.168.1.23:8082)",
+			"type": "string"
+		},
+		{
+			"param": "username",
+			"displayName": "username",
+			"description": "username",
+			"type": "string"
+		},
+		{
+			"param": "password",
+			"displayName": "password",
+			"description": "password",
+			"type": "string"
+		},
+		{
+			"param": "resourcespath",
+			"displayName": "resourcespath",
+			"description": "The API that to query resources from eSIGL (e.g: /rest-api/lookup)",
+			"type": "string"
+		}
+		
+      ]
+    },
+     {
+      "param": "lmisUserCreationRolesAndProgramRules",
+      "displayName": "lmisUserCreationRolesAndProgramRules",
+      "description": "Role name and program to assign to LMIS created users",
+      "type": "struct",
+      "template": [
+		{
+			"param": "RolesAndProgramRules1",
+			"displayName": "RolesAndProgramRules1",
+			"description": "role and programid seperated by ',' ",
+			"type": "string"
+		},
+		{
+			"param": "RolesAndProgramRules2",
+			"displayName": "RolesAndProgramRules2",
+			"description": "role and programid seperated by ','",
+			"type": "string"
+		},
+		{
+			"param": "RolesAndProgramRules3",
+			"displayName": "RolesAndProgramRules2",
+			"description": "role and programid seperated by ','",
+			"type": "string"
+		}
+		
+      ]
+    },
+    {
+      "param": "emailSettings",
+      "displayName": "emailSettings",
+      "description": "email settings used to send credentials to openlmis created users",
+      "type": "struct",
+      "template": [
+		{
+			"param": "smtp_host",
+			"displayName": "smtp_host",
+			"description": "SMTP host",
+			"type": "string"
+		},
+		{
+			"param": "smtp_port",
+			"displayName": "smtp_port",
+			"description": "SMTP port",
+			"type": "string"
+		},
+		{
+			"param": "smtp_secured",
+			"displayName": "smtp_secured",
+			"description": "SMTP secured",
+			"type": "string"
+		},
+		{
+			"param": "username",
+			"displayName": "username",
+			"description": "Sender email address",
+			"type": "string"
+		},
+		{
+			"param": "password",
+			"displayName": "password",
+			"description": "Password of the sender email",
+			"type": "string"
+		}
+		
+      ]
+    },
+    {
+      "param": "emailStructure",
+      "displayName": "emailStructure",
+      "description": "Body structure of the email",
+      "type": "struct",
+      "template": [
+		{
+			"param": "title",
+			"displayName": "title",
+			"description": "title of the email",
+			"type": "string"
+		},
+		{
+			"param": "messageContent",
+			"displayName": "messageContent",
+			"description": "Content template of the message",
+			"type": "string"
+		}
+      ]
+    },
+    {
+		"param": "usernameToExclude",
+		"displayName": "usernameToExclude",
+		"description": "The list of moodle user to exclude separated by comma ','",
+		"type": "string"
+	},
+	{
+		"param": "pgConnectionString",
+		"displayName": "pgConnectionString",
+		"description": "Postgres connection string to openLMIS DB",
+		"type": "string"
+	}
+  ],
+ "config": {
+    "upstreamUrl": "http://sampleApplication:7001",
+    "clientPassword":"pwd",
+    "coursesToProcess":"course1,course2",
+    "moodleParams":{
+		"url":"localhost",
+		"apiPath":"/moodle/webservice/rest/server.php?moodlewsrestformat=json&wstoken=",
+		"token":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+	},
+	"maxUsersToSyncPerCall":"",
+	"esiglServer":{
+		"url":"",
+		"username":"",
+		"password":"",
+		"resourcespath":"/rest-api"
+	},
+	"usernameToExclude":"guest,admin,webserviceuser",
+	"pgConnectionString":"postgresql://user:pwd@localhost:5432/open_lmis",
+	"lmisUserCreationRolesAndProgramRules":{
+		"RolesAndProgramRules1":"rolename1,1",
+		"RolesAndProgramRules2":"rolename2,2",
+		"RolesAndProgramRules3":"rolename3,3"
+	},
+	"emailSettings":{
+		"smtp_host":"smtp.gmail.com",
+		"smtp_port":"587",
+		"smtp_secured":"No",
+		"username":"emailaddress",
+		"password":"password"
+	},
+	"emailStructure":{
+		"title":"Création du compte e-SIGL(e-Formation Chaîne d'approvisionnement)",
+		"messageContent":"<p>Bonjour,</p><p> Un nouveau compte a été créé pour vous sur le site {esigleSite} et un mot de passe temporaire vous a été délivré.</p> Les informations nécessaires à votre connexion sont: <p>nom d'utilisateur:{username}</p> <p>et mot de passe: {password}.</p> <p>Admin User</p>"
+	}
+	}
+	
+}
+
