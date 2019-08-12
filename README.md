@@ -37,7 +37,7 @@ The architecture requires the following components to be installed
 * [OpenHIM Console](https://openhim.readthedocs.io/en/latest/getting-started.html)
 ### Mediators
 ```
-git clone https://github.com/gerard-bisama/guinea-interop-dhis2-esigl.git
+git clone https://github.com/gerard-bisama/ci-interop-moodle-esigl.git
 ```
 To run the mediator
 ```
