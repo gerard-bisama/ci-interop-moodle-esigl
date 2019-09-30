@@ -42,6 +42,7 @@ git clone https://github.com/gerard-bisama/ci-interop-moodle-esigl.git
 To run the mediator
 ```
 cd scmci-moodle-esigl
+apt-get install libpq-dev g++ make #to install postgres client and library
 npm install
 npm start
 ```
